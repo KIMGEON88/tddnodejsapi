@@ -35,16 +35,15 @@
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const user = require("./api/user");
 
 const app = express();
-const port = 3000;
 
-app.use(morgan("dev"));
+if (process.env.NODE_ENV !== "test") app.use(morgan("dev"));
+
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+app.use("/users", user);
 
 module.exports = app;
